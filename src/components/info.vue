@@ -46,10 +46,10 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item,index) in arrList">
-                            <td>{{item.进度}}</td>
-                            <td>{{item.结果}}</td>
-                            <td>{{item.明细}}</td>
-                            <td>{{item.编辑}}</td>
+                            <td><a>{{item.进度}}</a></td>
+                            <td><a>{{item.结果}}</a></td>
+                            <td><a>{{item.明细}}</a></td>
+                            <td><a>{{item.编辑}}</a></td>
                             <td>{{item.任务}}</td>
                             <td>{{item.任务名称}}</td>
                             <td>{{item.类型}}</td>
@@ -79,21 +79,26 @@
         components: {
 
         }, mounted() {
-            // this.getTableData();
+            this.getTableData();
             //    this.$http.get({ type: "get", url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=callback', dataType: 'jsonp', jsonpCallback: 'callback', success: function (res, data) { console.log(res); }, error: function (err) { console.log(err); } });
         }
         , methods: {
             getTableData() {
                 var _this = this;
-                this.$http.post('api/AppCheckCategory/QueryCategory', {
+                var postData = {
                     PAGE_SIZE: 10,
                     PAGE_NO: 1,
                     CHECKINFO_TYPE: _this.CHECK_TYPE,
                     STATUS: "",
                     CHECK_NAME: _this.CHECK_NAME,
-                }).then(function (res) {
-                    console.log(res.data.DATA);
-                    _this.arrList = res.data.DATA;
+                };
+                this.$http.post('api/AppCheckCategory/QueryCategory', postData).then(function (res) {
+                    if (res.data.RESULT_CODE == 1) {
+                        console.log(res.data.DATA);
+                        _this.arrList = res.data.DATA;
+                    }else{
+                        alert(res.data);
+                    }
                 }).catch(function (err) {
                     console.log(err);
                 })
@@ -106,7 +111,7 @@
 
 <style>
     .table {
-        margin:0px;
+        margin: 0px;
     }
     
     .input__label {

@@ -4,6 +4,7 @@ import Hello from '@/components/Hello'
 import list from '@/components/list'
 import detail from '@/components/detail'
 import info from '@/components/info'
+import login from '@/components/login'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/info',
       name: 'info',
       component: info
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
     }
   ]
 })

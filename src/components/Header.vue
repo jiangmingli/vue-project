@@ -18,12 +18,15 @@
         },
         methods: {
             getLoginData() {
+                
                 this.$http.post('api/Login/CheckLogin', {
                     username: 'H2901',
                     password: 'c28e0f32547fc18e5f00ebc31021ff8f'
                 }).then(function (res) {
                     console.log(res);
-                    // _this.articleData = res.data[id];
+                    if(res.data.state=="success"){
+                        alert("登录成功！");
+                    }
                 }).catch(function (err) {
                     console.log(err);
                 })
