@@ -10,11 +10,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    },
+    // {
+    //   path: '/',
+    //   name: 'Hello',
+    //   component: Hello
+    // },
     {
       path: '/list',
       name: 'list',
@@ -31,9 +31,20 @@ export default new Router({
       component: info
     },
     {
+      path: '/',
+      name: 'login',
+      redirect: '/login'
+    },
+    {
       path: '/login',
       name: 'login',
       component: login
     }
+    // ,
+    // {
+    //   path: '*',
+    //   name: 'login',
+    //   redirect: './login'
+    // }
   ]
 })

@@ -4,7 +4,7 @@
             <div class="logo"><img src="../assets/logo.png"></div>
             <h2>东风日产经销商门户</h2>
             <h5>DEALER PORTAL</h5>
-            <button class="btn btn-danger btn-login" @click="getLoginData()">登录</button>
+            <!--<button class="btn btn-danger btn-login" @click="getLoginData()">登录</button>-->
         </div>
     </div>
 </template>
@@ -13,18 +13,21 @@
         data() {
             return {}
         },
+        props: ['haha']
+        ,
         mounted() {
-
+            console.log(this.haha)
         },
         methods: {
+
             getLoginData() {
-                
+
                 this.$http.post('api/Login/CheckLogin', {
                     username: 'H2901',
                     password: 'c28e0f32547fc18e5f00ebc31021ff8f'
                 }).then(function (res) {
                     console.log(res);
-                    if(res.data.state=="success"){
+                    if (res.data.state == "success") {
                         alert("登录成功！");
                     }
                 }).catch(function (err) {

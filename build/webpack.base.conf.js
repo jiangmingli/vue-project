@@ -33,6 +33,7 @@ module.exports = {
       '@': resolve('src'),
       'bootstrap': resolve('bower_components/bootstrap'),
       'bootstrap-table': resolve('bower_components/bootstrap-table'),
+      'element-ui': resolve('node_modules/.1.4.0@element-ui')
     }
   },
   module: {
@@ -47,6 +48,15 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
       },
+      // {
+      //   test: /\.css$/,
+      //   loader: 'style!css'
+      // },
+      {
+        test: /\.less$/,
+        loader: 'style!less'
+      }
+      ,
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

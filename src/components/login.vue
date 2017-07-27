@@ -20,25 +20,22 @@
     export default {
         data() {
             return {}
-        },
-        mounted() {
+        }
+        ,mounted() {
 
         },
         methods: {
             getLoginData() {
                 var _this = this;
+                this.$store.dispatch('showLoading');
                 this.$http.post('api/Login/CheckLogin', {
                     username: 'H2901',
                     password: 'c28e0f32547fc18e5f00ebc31021ff8f'
                 }).then(function (res) {
                     console.log(res);
+                    _this.$store.dispatch('hideLoading');
                     if (res.data.state == "success") {
                         alert("登录成功！");
-                        // const router = new VueRouter({
-                        //     routes: [
-                        //         { path: '/login', redirect: '/info' }
-                        //     ]
-                        // })
                         _this.$router.push({ path: '/info' })
                     }
                 }).catch(function (err) {
@@ -54,6 +51,6 @@
 <style>
     .loginBox {
         text-align: center;
-        margin-top: 200px;
+        margin-top: 150px;
     }
 </style>

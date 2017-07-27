@@ -1,14 +1,16 @@
 <template>
     <div class="info clearfix">
         <div class="left">
+            <div id="haha">{{haha}}</div>
             <h4>检核任务管理</h4>
+            <el-button type="primary" icon="search">主要按钮</el-button>
         </div>
         <div class="right">
             <h4>查询条件</h4>
             <form>
                 <div class="items_input clearfix">
                     <div class="item_input">
-                        <label class="input__label">类型：</label>
+                        <!--<label class="input__label">类型：</label>-->
                         <select name="CHECKINFO_TYPE" class="input__text" id="CHECKINFO_TYPE" v-model="CHECK_TYPE">
                           <option value="">请选择</option>
                           <option value="0">临时</option>
@@ -16,7 +18,7 @@
                         </select>
                     </div>
                     <div class="item_input">
-                        <lable class="input__label">任务名：</lable>
+                        <!--<lable class="input__label">任务名：</lable>-->
                         <input type="text" value="" placeholder="请输入" v-model="CHECK_NAME" />
                     </div>
                 </div>
@@ -49,7 +51,7 @@
                             <td><a>{{item.进度}}</a></td>
                             <td><a>{{item.结果}}</a></td>
                             <td><a>{{item.明细}}</a></td>
-                            <td><a>{{item.编辑}}</a></td>
+                            <td><a @click="detail(item.CHECK_ID)" :checkId="item.CHECK_ID">{{item.编辑}}</a></td>
                             <td>{{item.任务}}</td>
                             <td>{{item.任务名称}}</td>
                             <td>{{item.类型}}</td>
@@ -64,25 +66,46 @@
             </div>
         </div>
         <!--<mAside></mAside>-->
+        <!--<models :isShow="show" v-on:ee="ishidden"></models>-->
+        <models v-if="show" @fireclose="show = false" :checkId="CHECK_ID"></models>
     </div>
 </template>
 
 <script>
+    import models from '@/components/model.vue'
     export default {
         data() {
             return {
                 arrList: [],
+                checkDetail: [],
                 CHECK_TYPE: '',
-                CHECK_NAME: ''
+                CHECK_NAME: '',
+                ha: '',
+                show: false,
+                CHECK_ID: ""
             }
-        },
-        components: {
-
-        }, mounted() {
+        }
+        , props: ['haha']
+        , components: {
+            models
+        }
+        , mounted() {
+            // console.log(this.checkId);
             this.getTableData();
             //    this.$http.get({ type: "get", url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=callback', dataType: 'jsonp', jsonpCallback: 'callback', success: function (res, data) { console.log(res); }, error: function (err) { console.log(err); } });
         }
         , methods: {
+            detail(id) {
+                // alert("a");
+                // console.log(id);
+                var _this = this;
+                this.CHECK_ID = id;
+                console.log(this.CHECK_ID);
+                this.show = !this.show
+                // this.$router.push({ path: '/model', query: { id }});
+
+            },
+            
             getTableData() {
                 var _this = this;
                 var postData = {
@@ -92,12 +115,16 @@
                     STATUS: "",
                     CHECK_NAME: _this.CHECK_NAME,
                 };
+                this.$store.dispatch('showLoading');
                 this.$http.post('api/AppCheckCategory/QueryCategory', postData).then(function (res) {
+                    _this.$store.dispatch('hideLoading');
                     if (res.data.RESULT_CODE == 1) {
                         console.log(res.data.DATA);
                         _this.arrList = res.data.DATA;
-                    }else{
+                    } else {
                         alert(res.data);
+                        _this.$router.push({ path: '/login' });//动态匹配路由
+
                     }
                 }).catch(function (err) {
                     console.log(err);
@@ -109,7 +136,12 @@
 
 </script>
 
-<style>
+<style scoped lang="less">
+    @link-color: green;
+    a {
+        color: @link-color
+    }
+    
     .table {
         margin: 0px;
     }

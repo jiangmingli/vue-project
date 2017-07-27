@@ -6,13 +6,19 @@ import router from './router'
 import axios from 'axios'
 import $ from "jquery";
 import store from './store/';
+import Loading from './components/loading';
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 
 Vue.config.productionTip = false;
+Vue.use(Loading);
+Vue.use(ElementUI);
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-table/dist/bootstrap-table.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap-table/dist/bootstrap-table.min.js";
 
+console.log(store)
 /* eslint-disable no-new */
 
 // axios.interceptors.request.use(function (config) {  //配置发送请求的信息

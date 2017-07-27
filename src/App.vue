@@ -1,10 +1,12 @@
 <template>
   <div id="app" class="clearfix">
     <!--<img src="./assets/logo.png">-->
-    <mHeader v-show="false"></mHeader>
+    <loading v-show="loading"></loading>
+    <mHeader v-show="headerShow"></mHeader>
     <mNav></mNav>
+    <div :haha="parent"></div>
     <router-view></router-view>
-    <mFooter></mFooter>
+    <mFooter v-show="headerShow"></mFooter>
   </div>
 </template>
 
@@ -12,23 +14,28 @@
   import mNav from '@/components/nav.vue'
   import mHeader from '@/components/Header.vue'
   import mFooter from '@/components/footer.vue'
-  import {mapGetters,mapActions} from 'vuex'
+  import { mapGetters, matpActions } from 'vuex'
   // import "bootstrap/dist/js/bootstrap.min.js";
   export default {
     name: 'app',
     data() {
       return {
-        headerShow:"true"
+        parent: "我是来自父组件的信息"
       }
     },
-    // computed:mapGetters([
-    //   'headerShow'
-    // ]),
-    watch:{//监听路由的变化
-      $route(to,from){
+    computed: mapGetters([
+      'headerShow',
+      'loading'
+    ]),
+    watch: {//监听路由的变化
+      $route(to, from) {
         // alert(1);
-        if(to.path='/login'){
-            this.$store.dispatch('headerShow')
+        console.log(to.path);
+        if (to.path == '/login') {
+          console.log(this.$store)
+          this.$store.dispatch('hideHeader')
+        } else {
+          this.$store.dispatch('showHeader')
         }
       }
     }
@@ -41,9 +48,9 @@
 
 </script>
 
-<style>
+<style scoped lang="less">
   #app {
-    margin-bottom:60px;
+    margin-bottom: 60px;
     /*background: red;*/
   }
 </style>
